@@ -22,19 +22,12 @@ public class WeatherController {
     public ModelAndView getWeather(@RequestParam String city) {
         ModelAndView mav = new ModelAndView();
 
-        String weatherInfo = weatherSvc.getWeatherInfoJSON(city);
-
-        WeatherInfo wInfo = null;
-
-        if(weatherInfo != null)
-            wInfo = WeatherInfo.jsonToWeatherInfo(weatherInfo);
-
-        boolean isFromCache = false;
+        WeatherInfo wInfo = weatherSvc.getWeatherInfo(city);
 
         // 200
         mav.setViewName("weather-info");
         mav.addObject("weatherInfo", wInfo);
-        mav.addObject("isFromCache", isFromCache);
+        //mav.addObject("isFromCache", false);
         mav.setStatus(HttpStatusCode.valueOf(200));
         
         return mav;

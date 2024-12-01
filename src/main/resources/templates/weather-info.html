@@ -75,8 +75,8 @@
         </div>
         <div>
             <p id="cacheInfo">Data retrieved from cache:
-            <code data-th-if="${isFromCache}">True</code>
-            <code data-th-if="${!isFromCache}">False</code>
+            <code data-th-if="*{isFromCache}">True</code>
+            <code data-th-if="*{!isFromCache}">False</code>
             </p>
         </div>
     </div>

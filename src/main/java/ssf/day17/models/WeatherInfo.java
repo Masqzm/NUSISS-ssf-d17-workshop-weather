@@ -33,6 +33,8 @@ public class WeatherInfo {
     private int visibility;   // m
     private int cloudiness;   // %
 
+    private boolean isFromCache = false;
+
     private LocalDateTime timeMeasured;
     private LocalDateTime timeSunrise;
     private LocalDateTime timeSunset;
@@ -41,6 +43,9 @@ public class WeatherInfo {
     private static final String ICON_URL_SUFFIX = "@2x.png";
 
     public static WeatherInfo jsonToWeatherInfo(String json) {
+        if(json == null)
+            return null;
+            
         WeatherInfo wInfo = new WeatherInfo();
 
         JsonReader reader = Json.createReader(new StringReader(json));
@@ -103,6 +108,13 @@ public class WeatherInfo {
                 + humidity + ", visibility=" + visibility + ", windSpeed=" + windSpeed + ", windDir=" + windDir
                 + ", cloudiness=" + cloudiness + ", timeMeasured=" + timeMeasured + ", timeSunrise=" + timeSunrise
                 + ", timeSunset=" + timeSunset + "]";
+    }    
+
+    public boolean isFromCache() {
+        return isFromCache;
+    }
+    public void setFromCache(boolean isFromCache) {
+        this.isFromCache = isFromCache;
     }
 
     public List<WCondition> getwConditionsList() {

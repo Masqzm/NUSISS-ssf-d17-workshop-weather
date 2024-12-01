@@ -20,12 +20,39 @@ public class WeatherService {
     private WeatherRepository weatherRepo;
 
     public static final String GET_URL = "https://api.openweathermap.org/data/2.5/weather";
+    public static final int CACHE_EXPIRY_MIN = 10;
 
     @Value("${openweathermap.api-key}")
     private String apiKey;
 
+    public WeatherInfo getWeatherInfo(String city) {
+        String json = null;
+
+        // Lookup db cache
+        json = weatherRepo.getWeatherInfo(city);
+
+        // Do REST call if can't find in db
+        if(json == null) {
+            json = fetchWeatherInfoJSON(city);
+
+            // return null if data not avail (most prob 404)
+            if(json == null)
+                return null;
+
+            // Cache result if avail
+            weatherRepo.cacheWeatherInfo(city, json, CACHE_EXPIRY_MIN);
+            
+            return WeatherInfo.jsonToWeatherInfo(json);
+        }
+        
+        WeatherInfo wInfo = WeatherInfo.jsonToWeatherInfo(json);
+        wInfo.setFromCache(true);
+
+        return wInfo;
+    }
+
     // REST call
-    public String getWeatherInfoJSON(String city) {
+    public String fetchWeatherInfoJSON(String city) {
         String url = UriComponentsBuilder.fromUriString(GET_URL)
                     .queryParam("q", city)
                     .queryParam("units", "metric")
@@ -57,13 +84,5 @@ public class WeatherService {
         }
 
         return null;
-    }
-
-    // db lookup
-    public WeatherInfo getWeatherInfo(String city) {
-
-        WeatherInfo wInfo = new WeatherInfo();
-
-        return wInfo;
     }
 }
