@@ -1,0 +1,32 @@
+body {
+    background-color: beige;
+    padding: 0 20px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+button {
+    padding: 5px;
+    margin-top: 10px;
+    float: right;
+}
+
+img {
+    width: 500px;
+    height: auto;
+}
+
+.info-card {
+    margin: 20px;
+    border: solid 1px;
+}
+
+.info-card > div {
+    margin: 10px;
+}
+
+.desc {
+    font-style: italic;
+}
