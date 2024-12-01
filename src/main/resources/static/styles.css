@@ -13,20 +13,56 @@ button {
     float: right;
 }
 
-img {
-    width: 500px;
-    height: auto;
+#weatherInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
 }
 
+.container {
+    display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2vh;
+}
 .info-card {
-    margin: 20px;
-    border: solid 1px;
+    text-align: center;
+    border: solid 2px;
+	width: 25vw;
+	/* border-radius: 8px; */
+
+    padding: 20px 10px 40px;
 }
 
-.info-card > div {
-    margin: 10px;
+h3 {
+    font-size: 40px;
+    margin: 30px;
+}
+
+.container-inner {
+    display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	row-gap: 2vh;
+}
+.info-card-inner {
+    text-align: center;
+    /* border: solid 1px; */
+    /* padding: 0px 10px 25px; */
+}
+
+img {
+    background-color: grey;
 }
 
 .desc {
     font-style: italic;
+}
+
+#cacheInfo {
+    text-align: center;
+}
+
+#back {
+    text-align: center;
 }

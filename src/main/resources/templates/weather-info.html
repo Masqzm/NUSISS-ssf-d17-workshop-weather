@@ -7,8 +7,80 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div data-th-text="${weatherInfo}"></div>
+    <!-- <div data-th-text="${weatherInfo}"></div> -->
 
-    <h2><a href="http://"></a></h2>
+    <div data-th-if="${weatherInfo == null}">
+        <h3>Your search produces no result!</h3>
+    </div>
+
+    <div data-th-if="${weatherInfo != null}" data-th-object="${weatherInfo}" id="weatherInfo">
+        <div><h1>Current weather in <span data-th-text="*{city}"></span></h1></div>
+
+        <div class="container">
+            <div class="info-card">
+                <h2>Condition</h2>
+                <div class="container-inner">
+                    <div class="info-card-inner" data-th-each="wc : *{wConditionsList}" data-th-object="${wc}">
+                        <img data-th-src="*{iconURL}">
+                        <p>
+                            <span data-th-text="*{condition}"></span>
+                            (<span data-th-text="*{description}" class="desc"></span>)
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-card">
+                <h2>Temperature</h2>
+                <h3><span data-th-text="*{temp}"></span>°C</h3>
+                <div>Feels like: <span data-th-text="*{tempFeels}"></span>°C</div>
+                <br>
+                <div>Low: <span data-th-text="*{tempMin}"></span>°C 
+                    | High: <span data-th-text="*{tempMax}"></span>°C
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <h2>Wind</h2>
+                <h3><span data-th-text="*{windSpeed}"></span>m/s</h3>
+                <br>
+                Direction: <span data-th-text="*{windDir}"></span>°
+            </div>
+            
+            <div class="info-card">
+                <h2>Time</h2>
+
+                <h2 data-th-text="${#temporals.format(weatherInfo.timeMeasured, 'd MMM yyyy')}"></h2>
+
+                <div>Measured at: <span data-th-text="${#temporals.format(weatherInfo.timeMeasured, 'h:mm a')}"></span>
+                </div>
+                <br>
+                <div>Sunrise: <span data-th-text="${#temporals.format(weatherInfo.timeSunrise, 'h:mm a')}"></span> 
+                    | Sunset: <span data-th-text="${#temporals.format(weatherInfo.timeSunset, 'h:mm a')}"></span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h2>Visibility</h2>
+                <h3><span data-th-text="*{visibility}"></span>m</h3>
+                Cloudiness: <span data-th-text="*{cloudiness}"></span>%
+            </div>
+            
+            <div class="info-card">
+                <h2>Humidity & Pressure</h2>
+                <h3><span data-th-text="*{humidity}"></span>% |  
+                    <span data-th-text="*{pressure}"></span>hPa</h3>
+            </div>
+        </div>
+        <div>
+            <p id="cacheInfo">Data retrieved from cache:
+            <code data-th-if="${isFromCache}">True</code>
+            <code data-th-if="${!isFromCache}">False</code>
+            </p>
+        </div>
+    </div>
+    
+    <h2 id="back"><a data-th-href="@{/}">Back</a></h2>
 </body>
 </html>

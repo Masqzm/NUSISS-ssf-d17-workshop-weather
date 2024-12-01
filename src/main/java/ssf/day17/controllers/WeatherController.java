@@ -24,11 +24,17 @@ public class WeatherController {
 
         String weatherInfo = weatherSvc.getWeatherInfoJSON(city);
 
-        WeatherInfo wInfo = WeatherInfo.jsonToWeatherInfo(weatherInfo);
+        WeatherInfo wInfo = null;
+
+        if(weatherInfo != null)
+            wInfo = WeatherInfo.jsonToWeatherInfo(weatherInfo);
+
+        boolean isFromCache = false;
 
         // 200
         mav.setViewName("weather-info");
-        mav.addObject("weatherInfo", weatherInfo);
+        mav.addObject("weatherInfo", wInfo);
+        mav.addObject("isFromCache", isFromCache);
         mav.setStatus(HttpStatusCode.valueOf(200));
         
         return mav;

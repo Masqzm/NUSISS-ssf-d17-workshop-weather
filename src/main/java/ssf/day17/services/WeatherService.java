@@ -28,7 +28,7 @@ public class WeatherService {
     public String getWeatherInfoJSON(String city) {
         String url = UriComponentsBuilder.fromUriString(GET_URL)
                     .queryParam("q", city)
-                    .queryParam("units", "metrics")
+                    .queryParam("units", "metric")
                     .queryParam("appid", apiKey)
                     .toUriString();
 
@@ -36,7 +36,7 @@ public class WeatherService {
                     .get(url)
                     .accept(MediaType.APPLICATION_JSON)     
                     .build();
-
+                    
         // Create REST template
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> resp;
@@ -49,8 +49,8 @@ public class WeatherService {
 
             return payload;
         } catch(HttpClientErrorException.NotFound ex) {
-            // Extract and return response body
-            return ex.getResponseBodyAsString();
+            //System.out.println(ex.getResponseBodyAsString());
+            return null;
         }
         catch(Exception ex) {
             ex.printStackTrace();
