@@ -24,6 +24,7 @@ public class WeatherService {
     @Value("${openweathermap.api-key}")
     private String apiKey;
 
+    // REST call
     public String getWeatherInfoJSON(String city) {
         String url = UriComponentsBuilder.fromUriString(GET_URL)
                     .queryParam("q", city)
@@ -58,6 +59,7 @@ public class WeatherService {
         return null;
     }
 
+    // db lookup
     public WeatherInfo getWeatherInfo(String city) {
 
         WeatherInfo wInfo = new WeatherInfo();
